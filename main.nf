@@ -54,15 +54,15 @@ process test {
     container 'cgrlab/tidyverse'
 
     input:
-    val temp from each_abstract
+    val myfiles from each_abstract
 
     output:
     file params.out_file into out_csv
 
     """
     #!/usr/bin/env Rscript
-
-    readr::write_csv($temp, file = '$params.out_file')
+    mylst <- $myfiles
+    write.csv(mylst, file = '$params.out_file')
 
     """
 }

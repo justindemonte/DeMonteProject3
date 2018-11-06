@@ -4,7 +4,7 @@
 params.out_dir = 'data/'
 params.out_file = 'abstracts.csv'
 
-
+/*
 process download_data {
 
     
@@ -21,11 +21,12 @@ process download_data {
     """
 
 }
+*/
 
-/*
+
 file_channel = Channel.fromPath('datasci611/data/p2_abstracts/abs*.txt')
 
-process get_seq_length {
+process read_files {
 
     // this container includes Tidyverse and stringr 
 
@@ -44,7 +45,7 @@ process get_seq_length {
 }
 
 
-process get_seq_length {
+process test {
 
     // this container has Tidyverse and stringr installed
 
@@ -59,8 +60,8 @@ process get_seq_length {
     """
     #!/usr/local/bin/Rscript
 
-    csv <- write_csv($val)
+    write_csv($val, file = '$params.out_file')
 
     """
 }
-*/
+

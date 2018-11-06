@@ -1,67 +1,66 @@
 #!/usr/bin/env nextflow
 
-params.file_dir = 'data/fastas/*.fasta'
+// need to fix the (default) params.file_dir directory ?
 params.out_dir = 'data/'
-params.out_file = 'histogram.png'
+params.out_file = 'abstracts.csv'
 
-file_channel = Channel.fromPath( params.file_dir )
+
+process download_data {
+
+    
+
+    """
+
+    #!/usr/bin/env bash
+
+    git clone https://github.com/biodatascience/datasci611.git && \
+    cd datasci611 && \
+    git checkout gh-pages && \
+    cd data && \
+    cd p2_abstracts
+    """
+
+}
+
+/*
+file_channel = Channel.fromPath('datasci611/data/p2_abstracts/abs*.txt')
 
 process get_seq_length {
-    container 'bioconductor/release_core2:R3.5.0_Bioc3.7'
+
+    // this container includes Tidyverse and stringr 
+
+    container 'cgrlab/tidyverse'
 
     input:
     file f from file_channel
 
     output:
-    stdout lengths
+    stdout each_abstract
 
     """
     #!/usr/local/bin/Rscript
-    suppressMessages(library(Biostrings))
-    s = readDNAStringSet('$f')
-    l = length(s[[1]])
-    cat(l)
+    temp <- lapply($f, read_file)
     """
 }
 
-process python_transform_list {
-    container 'python:3.7-slim'
+
+process get_seq_length {
+
+    // this container has Tidyverse and stringr installed
+
+    container 'cgrlab/tidyverse'
 
     input:
-    val l from lengths.collect()
+    val temp from each_abstract
 
     output:
-    stdout lengths_transformed
-
-    """
-    #!/usr/local/bin/python
-    numbers = $l
-    lstring = 'c(' + ','.join([str(x) for x in numbers]) + ')'
-    print(lstring)
-    """
-}
-
-process plot_lengths_hist {
-    container 'rocker/tidyverse:3.5'
-    publishDir params.out_dir, mode: 'copy'
-
-    input:
-    val l from lengths_transformed
-
-    output:
-    file params.out_file into last_fig
+    file params.out_file into out_csv
 
     """
     #!/usr/local/bin/Rscript
-    library(tidyverse)
-    numbers = tibble(n = $l)
-    ggplot(numbers, aes(x=n)) +
-        geom_histogram() +
-        xlab('sequence length') +
-        ylab('count') +
-        theme_bw()
-    ggsave('$params.out_file', width = 10, height = 8, units = 'cm')
+
+    csv <- write_csv($val)
+
     """
 }
-
-lengths_transformed.subscribe { println it }
+*/

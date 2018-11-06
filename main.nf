@@ -62,7 +62,7 @@ process test {
     """
     #!/usr/bin/env Rscript
 
-    write_csv($val, file = '$params.out_file')
+    readr::write_csv($temp, file = '$params.out_file')
 
     """
 }

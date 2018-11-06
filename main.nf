@@ -39,7 +39,7 @@ process read_files {
     stdout each_abstract
 
     """
-    #!/usr/local/bin/Rscript
+    #!/usr/bin/env Rscript
     temp <- lapply($f, read_file)
     """
 }
@@ -58,7 +58,7 @@ process test {
     file params.out_file into out_csv
 
     """
-    #!/usr/local/bin/Rscript
+    #!/usr/bin/env Rscript
 
     write_csv($val, file = '$params.out_file')
 

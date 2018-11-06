@@ -40,7 +40,9 @@ process read_files {
 
     """
     #!/usr/bin/env Rscript
-    temp <- lapply($f, read_file)
+    temp = list.files(pattern="*.txt")
+    myfiles = lapply(temp, read_file)
+
     """
 }
 

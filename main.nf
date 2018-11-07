@@ -40,10 +40,9 @@ process read_files {
 
     """
     #!/usr/bin/env Rscript
-    temp <- list.files(pattern="*.txt")
-    myfiles <- lapply(temp, readr::read_file)
-    myfiles
-    print(length(myfiles))
+
+    myfiles <- readr::read_file
+   
     """
 }
 
@@ -55,15 +54,13 @@ process test {
     container 'cgrlab/tidyverse'
 
     input:
-    val myfiles from each_abstract
+    val myfiles from each_abstract.collect()
 
     output:
     file params.out_file into out_csv
 
     """
     #!/usr/bin/env Rscript
-    mylst <- $myfiles
-    print(mylst)
     write.csv(mylst, file = '$params.out_file')
 
     """

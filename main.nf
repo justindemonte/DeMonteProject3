@@ -41,7 +41,7 @@ process read_files {
     """
     #!/usr/bin/env Rscript
 
-    myfiles <- readr::read_file
+    myfiles = readr::read_delim($f)
    
     """
 }

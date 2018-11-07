@@ -42,7 +42,8 @@ process read_files {
     #!/usr/bin/env Rscript
     temp <- list.files(pattern="*.txt")
     myfiles <- lapply(temp, readr::read_file)
-
+    myfiles
+    print(length(myfiles))
     """
 }
 

@@ -40,8 +40,8 @@ process read_files {
 
     """
     #!/usr/bin/env Rscript
-    temp = list.files(pattern="*.txt")
-    myfiles = lapply(temp, readr::read_file)
+    temp <- list.files(pattern="*.txt")
+    myfiles <- lapply(temp, readr::read_file)
 
     """
 }
@@ -62,6 +62,7 @@ process test {
     """
     #!/usr/bin/env Rscript
     mylst <- $myfiles
+    print(mylst)
     write.csv(mylst, file = '$params.out_file')
 
     """

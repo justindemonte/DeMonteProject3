@@ -4,7 +4,7 @@
 params.out_dir = 'data/'
 params.out_file = 'abstracts.csv'
 
-
+/*
 process download_data {
 
     
@@ -21,11 +21,12 @@ process download_data {
     """
 
 }
+*/
 
-/*
+
 file_channel = Channel.fromPath('datasci611/data/p2_abstracts/abs*.txt')
 
-process get_seq_length {
+process read_files {
 
     // this container includes Tidyverse and stringr 
 
@@ -38,29 +39,30 @@ process get_seq_length {
     stdout each_abstract
 
     """
-    #!/usr/local/bin/Rscript
-    temp <- lapply($f, read_file)
+    #!/usr/bin/env Rscript
+
+    myfiles = readr::read_delim($f)
+   
     """
 }
 
 
-process get_seq_length {
+process test {
 
     // this container has Tidyverse and stringr installed
 
     container 'cgrlab/tidyverse'
 
     input:
-    val temp from each_abstract
+    val myfiles from each_abstract.collect()
 
     output:
     file params.out_file into out_csv
 
     """
-    #!/usr/local/bin/Rscript
-
-    csv <- write_csv($val)
+    #!/usr/bin/env Rscript
+    write.csv(mylst, file = '$params.out_file')
 
     """
 }
-*/
+

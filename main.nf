@@ -16,17 +16,33 @@ process download_data {
 }
 
 process read_files {
-
     container 'cgrlab/tidyverse'
-
+    
     input:
-    file f from file_channel.collectFile(name: 'singleFile.txt', newLine: true)
+    file f from file_channel
 
     output:
-    file 'abstracts.csv' into out_file
+    file '*.csv' into csv_out
 
+    script:
     """
-    Rscript $baseDir/bin/DeMonteProject3.R $f     
+    Rscript $baseDir/bin/getCollaborators.R $f 
     """
 }
 
+process plot_nucleus_counts {
+    container 'cgrlab/tidyverse'
+    publishDir 'data', mode: 'copy'
+    
+    input:
+    file i from csv_out.collectFile(name: 'collaborators.csv', newLine: true)
+
+    output:
+    file 'topTen.csv' into out_file
+
+    script:
+    """
+    Rscript $baseDir/bin/getTopTen.R $i
+    """
+
+}

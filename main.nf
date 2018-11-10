@@ -1,25 +1,15 @@
-#!/usr/bin/env nextflow
+#! /usr/bin/env nextflow
 
-process download_data {
+params.in_files = 'data/*.txt'
 
-    output:
-    file "./data/p2_abstracts/*.txt" into file_channel
+in_files = Channel.fromPath( params.in_files )
 
-    """
-    #!/usr/bin/env bash
+process read_in_files {
 
-    git clone https://github.com/biodatascience/datasci611.git && \
-    cd datasci611 && \
-    git checkout gh-pages
-    """
+    container ‘crglab/tidyverse’    
 
-}
-
-process read_files {
-    container 'cgrlab/tidyverse'
-    
     input:
-    file f from file_channel
+    file f from in_files
 
     output:
     file '*.csv' into csv_out
@@ -29,6 +19,7 @@ process read_files {
     Rscript $baseDir/bin/getCollaborators.R $f 
     """
 }
+
 
 process plot_nucleus_counts {
     container 'cgrlab/tidyverse'

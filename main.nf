@@ -21,7 +21,7 @@ process read_in_files {
 }
 
 
-process plot_nucleus_counts {
+process getTopTen {
     container 'cgrlab/tidyverse'
     publishDir 'data', mode: 'copy'
     

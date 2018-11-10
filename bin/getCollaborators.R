@@ -4,7 +4,7 @@ library(readr)
 
 args = commandArgs(trailingOnly = TRUE)
 
-abstract <- read_delim(args[1])
+abstract <- read_file('args[1]')
 
 keyWordRegex <- '(University|Hospital|School|Institute|Center)'
 

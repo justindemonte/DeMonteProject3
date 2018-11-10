@@ -1,15 +1,15 @@
 #! /usr/bin/env nextflow
 
-params.in_files = 'data/*.txt'
+params.in_files = 'data/abs*'
 
-in_files = Channel.fromPath( params.in_files )
+in_txt = Channel.fromPath( params.in_files )
 
 process read_in_files {
 
     container ‘crglab/tidyverse’    
 
     input:
-    file f from in_files
+    file f from in_txt
 
     output:
     file '*.csv' into csv_out

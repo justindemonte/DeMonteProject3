@@ -5,7 +5,7 @@ params.in_files = 'data/abs*'
 in_txt = Channel.fromPath( params.in_files )
 
 process readInFiles {
-    container ‘crglab/tidyverse’    
+    container 'crglab/tidyverse'    
 
     input:
     file f from in_txt

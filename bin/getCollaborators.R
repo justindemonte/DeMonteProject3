@@ -4,18 +4,22 @@ library(readr)
 
 args = commandArgs(trailingOnly = TRUE)
 
+
 abstract <- read_file(args[1])
+abstract <- str_replace_all(abstract, "[\r\n]" , "")
+
 
 keyWordRegex <- '(University|Hospital|School|Institute|Center)'
 
-SplitAbstract <- as.list(str_split(abstract, pattern = ",")[[1]])
+SplitAbstractCommas <- as.list(str_split(abstract, pattern = ",")[[1]])
 
-CollaboratorsFromAbstract <- SplitAbstract[grepl(keyWordRegex, SplitAbstract)]
+CollaboratorsFromAbstract <- SplitAbstractCommas[grepl(keyWordRegex, SplitAbstractCommas)]
 
 Collaborators <- unlist(CollaboratorsFromAbstract)
 
-output <- c(abstract,Collaborators)
+abstractVector <- list2 <- rep(abstract,length(Collaborators))
 
-fileConn = file("out.csv")
-writeLines(output, fileConn,sep="; ;")
-close(fileConn)
+output <- tibble(abstract = abstractVector, Collab = Collaborators)
+
+write_csv(output, "out.csv")
+

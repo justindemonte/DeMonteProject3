@@ -17,6 +17,8 @@ CollaboratorsFromAbstract <- SplitAbstractCommas[grepl(keyWordRegex, SplitAbstra
 
 Collaborators <- unlist(CollaboratorsFromAbstract)
 
+Collaborators <- unique(Collaborators)
+
 abstractVector <- list2 <- rep(abstract,length(Collaborators))
 
 output <- tibble(abstract = abstractVector, Collab = Collaborators)

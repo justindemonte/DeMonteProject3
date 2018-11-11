@@ -14,6 +14,8 @@ CollaboratorsFromAbstract <- SplitAbstract[grepl(keyWordRegex, SplitAbstract)]
 
 Collaborators <- unlist(CollaboratorsFromAbstract)
 
+output <- c(abstract,Collaborators)
+
 fileConn = file("out.csv")
-writeLines(Collaborators, fileConn,sep=",")
+writeLines(output, fileConn,sep="; ;")
 close(fileConn)

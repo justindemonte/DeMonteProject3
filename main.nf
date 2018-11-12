@@ -32,7 +32,7 @@ process getTopTen {
 
     script:
     """
-    Rscript $baseDir/bin/getTopTen.R $i
+    Rscript $baseDir/bin/GetTopTen.R $i
     """
 
 }

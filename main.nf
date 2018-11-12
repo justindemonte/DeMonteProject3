@@ -28,7 +28,7 @@ process getTopTen {
     file i from csv_out.collectFile(name: 'collaborators.csv', newLine: true)
 
     output:
-    file 'topTen.csv' into out_file
+    file '*.csv' into out_file
 
     script:
     """

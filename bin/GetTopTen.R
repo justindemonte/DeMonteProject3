@@ -24,7 +24,7 @@ TopTenNames <- CollaboratorsSorted$Collab[9:25]
 
 TopTenNames <- TopTenNames[c(-2,-5,-6,-7,-9,-14,-17)]
 
-# Create a subset of the original tibble for only the "#1" collaborator
+# Create a subset of the original tibble for each of the collaborators
 
 test1 <- 
   1:10 %>%

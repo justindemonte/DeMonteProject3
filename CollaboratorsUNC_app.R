@@ -6,8 +6,6 @@ library(shiny)
 
 inputFiles <- list()
 
-hope <- read_csv("words2.csv")
-hope
 
 for (i in 1:10) {
   inputFiles <- append(inputFiles, read_csv(paste("words", i, ".csv", sep="")))
@@ -16,12 +14,6 @@ for (i in 1:10) {
 
 TopTenCollaborators <- read_csv("wordsKey.csv")
 
-choice <- TopTenCollaborators[[1]][1]
-
-try <- paste("temp",match(choice,TopTenCollaborators[[1]]), sep="")
-try
-# Rely on the 'WorldPhones' dataset in the datasets
-# package (which generally comes preloaded).
 
 # Use a fluid Bootstrap layout
 ui <- fluidPage(    
@@ -32,16 +24,19 @@ ui <- fluidPage(
   # Generate a row with a sidebar
   sidebarLayout(      
     
+    
     # Define the sidebar with one input
     sidebarPanel(
       selectInput("region", "Collaborator:", 
                   choices=TopTenCollaborators),
       hr(),
-      helpText("Top Ten Institutions Collaborating with UNC")
-    ),
+      helpText("Top Ten Institutions Collaborating with UNC"),
+      p("Which institutions does The University of North Carolina at Chapel Hill collaborate with most frequently?  What are the likely subject emphases of these collaborations?  To answer this question, I started with the pubmed abstracts provided by Dr. Biggs.  I searched each abstract for institutions names (e.g. phrases containing the keywords university, hospital, etc.) then collected the top ten collaborators.  For each collaborator, I found the most frequently used words in abstracts involving that collaborator.  The results can be explored in this interactive application.  Select one of the top-ten-UNC collaborating institutions from the drop-down menu to explore the likely subject matter of those collaborations.")),
+    
     
     # Create a spot for the barplot
     mainPanel(
+      
       plotOutput("wordPlot")  
     )
     
@@ -49,9 +44,6 @@ ui <- fluidPage(
 )
 
 
-
-# Rely on the 'WorldPhones' dataset in the datasets
-# package (which generally comes preloaded).
 library(datasets)
 
 # Define a server for the Shiny app
@@ -61,15 +53,12 @@ server <- function(input, output) {
   output$wordPlot <- renderPlot({
       read_csv(paste("words", 
           match(input$region,TopTenCollaborators[[1]]), ".csv", sep="")) %>%
-      arrange(count) %>%
+      mutate(words=fct_reorder(words, count)) %>%
       ggplot(aes(x=words, y=count)) +
-      geom_bar(stat = "identity")
-    # Render a barplot
-    #  barplot(inputFiles[,input$region]*1000, 
-    #        main=input$region,
-    #        ylab="Number of Telephones",
+      geom_bar(stat = "identity") +
+      labs(x = "Subject Terms", y="Frequency") +
+      coord_flip() 
     
-    #        xlab="Year")
   })
 }
 

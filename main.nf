@@ -22,7 +22,7 @@ process readInFiles {
 
 process getTopTen {
     container 'cgrlab/tidyverse'
-    publishDir 'data', mode: 'copy'
+    publishDir '.', mode: 'copy'
     
     input:
     file i from csv_out.collectFile(name: 'collaborators.csv', newLine: true)

@@ -1,17 +1,13 @@
 library(tidyverse)
-library(readr)
 library(shiny)
 
-# Define UI for application that draws a histogram
+# Set up the input CSV files
 
 inputFiles <- list()
-
 
 for (i in 1:10) {
   inputFiles <- append(inputFiles, read_csv(paste("words", i, ".csv", sep="")))
 }
-
-
 TopTenCollaborators <- read_csv("wordsKey.csv")
 
 
@@ -49,7 +45,7 @@ library(datasets)
 # Define a server for the Shiny app
 server <- function(input, output) {
   
-  # Fill in the spot we created for a plot
+  # Fill in the spot created for a plot
   output$wordPlot <- renderPlot({
       read_csv(paste("words", 
           match(input$region,TopTenCollaborators[[1]]), ".csv", sep="")) %>%

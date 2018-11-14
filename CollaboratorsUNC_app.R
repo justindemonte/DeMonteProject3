@@ -31,9 +31,9 @@ ui <- fluidPage(
                   choices=TopTenCollaborators),
       hr(),
       
-      p("Which institutions does The University of North Carolina at Chapel Hill collaborate with most frequently?  What are the likely subject emphases of these collaborations?  To answer this question, I started with the pubmed abstracts provided by Dr. Biggs.  I searched each abstract for institutions names (e.g. phrases containing the keywords university, hospital, etc.) then collected the top ten collaborators.  For each collaborator, I found the most frequently used words in abstracts involving that collaborator.  The results can be explored in this interactive application.  Select one of the top-ten-UNC collaborating institutions from the drop-down menu to explore the likely subject matter of those collaborations.")),
+      p("Which institutions does The University of North Carolina at Chapel Hill collaborate with most frequently?  What are the likely subject emphases of these collaborations?  To answer this question, I started with the pubmed abstracts provided by Dr. Biggs.  I searched each abstract for institutions names (e.g. phrases containing the keywords university, hospital, etc.) then collected the top ten collaborators.  For each collaborator, I found the most frequently used words in abstracts involving that collaborator.  The results can be explored in this interactive application.  Select one of the top-ten-UNC collaborating institutions from the drop-down menu to explore the likely subject matter of those collaborations."),
       
-      helpText("Top Ten Institutions Collaborating with UNC"),
+      helpText("Top Ten Institutions Collaborating with UNC")),
     
     # Create a spot for the barplot
     

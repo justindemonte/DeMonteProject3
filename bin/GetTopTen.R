@@ -48,9 +48,9 @@ test1 <- lapply(test1, . %>% filter(!words %in% FilterStopWords))
 
 test1 <- lapply(test1, . %>% top_n(10))
 
+# Create output CSV's
 
 write_csv(as.data.frame(TopTenNames), "wordsKey.csv")
-write_csv(test1[[1]], paste("words", 1, "Key.csv", sep=""))
 
 for (i in 1:10) {
   write_csv(test1[[i]], paste("words", i, ".csv", sep=""))
